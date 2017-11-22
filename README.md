@@ -1,6 +1,6 @@
-# vue-maoyan
+# vue-Qmusic
 
-> 使用vue仿猫眼电影的webapp
+> 使用vue练习
 
 ## Build Setup
 
