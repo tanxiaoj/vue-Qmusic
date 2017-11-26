@@ -5,17 +5,20 @@
     <keep-alive>
       <router-view></router-view>
     </keep-alive>
+    <player></player>
   </div>
 </template>
 
 <script>
   import MHeader from 'components/m-header/m-header.vue'
+  import Player from 'components/player/player.vue'
   import Tab from 'components/tab/tab.vue'
   export default {
     name: 'app',
     components :{
       MHeader ,
-      Tab
+      Tab ,
+      Player
     }
   }
 </script>
