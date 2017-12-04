@@ -1,5 +1,5 @@
 <template>
-  <scroll class="suggest" ref="suggest" :data="result" :pullup="pullup" @scrollToEnd="searchMore">
+  <scroll class="suggest" ref="suggest" :data="result" :pullup="pullup" :beforeScroll="beforeScroll" @scrollToEnd="searchMore" @beforeScroll="listScroll">
     <ul class="suggest-list">
       <li class="suggest-item" v-for="item in result" @click="selectItem(item)">
         <div class="icon">
@@ -11,6 +11,9 @@
       </li>
       <loading v-show="hasMore" title=""></loading>
     </ul>
+    <div class="no-result-wrapper" v-show="!hasMore && !result.length">
+    <no-result title="抱歉，暂无搜索结果"></no-result>
+    </div>
   </scroll>
 </template>
 
@@ -21,6 +24,7 @@
   import Scroll from 'base/scroll/scroll'
   import Loading from 'base/loading/loading'
   import Singer from 'common/js/singer'
+  import NoResult from 'base/no-result/no-result'
   import { mapMutations,mapActions } from 'vuex'
 
   const TYPE_SINGER = 'singer'
@@ -41,6 +45,7 @@
         page :1 ,
         result : [] ,
         pullup :true ,
+        beforeScroll :true ,
         hasMore :true
       }
     },
@@ -93,6 +98,9 @@
           this.hasMore = false 
         }
       },
+      listScroll(){
+        this.$emit('listScroll')
+      },
       getIconCls(item){
         if(item.type === TYPE_SINGER){
           return 'icon-mine'
@@ -120,6 +128,7 @@
         }else{
           this.insertSong(item)
         }
+        this.$emit('select')
       },
       ...mapMutations({
         setSinger: 'SET_SINGER'
@@ -135,7 +144,8 @@
     },
     components :{
       Scroll ,
-      Loading
+      Loading ,
+      NoResult
     }
   }
 </script>
